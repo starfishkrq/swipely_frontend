@@ -13,7 +13,8 @@
     "export": "Export",
     "refresh": "Refresh",
     "viewMore": "View More",
-    "backToTop": "Back to Top"
+    "backToTop": "Back to Top",
+    "clearFilters": "Clear filters"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -196,5 +197,34 @@
   },
   "app": {
     "loadingPage": "Loading page..."
+  },
+  "emptyStates": {
+    "bridges": {
+      "title": "No bridges yet",
+      "description": "Swipely hasn't detected any bridges. Data is fetched from the Stellar network automatically — check back shortly.",
+      "filteredTitle": "No bridges match your filters",
+      "filteredDescription": "Try adjusting your search or filter criteria to find what you're looking for."
+    },
+    "alerts": {
+      "title": "No active alerts",
+      "description": "All monitored bridges are within their configured thresholds. Alerts will appear here when anomalies are detected.",
+      "filteredTitle": "No alerts match your filters",
+      "filteredDescription": "Try adjusting your search or filter criteria to find what you're looking for."
+    },
+    "incidents": {
+      "title": "No incidents recorded",
+      "description": "No incidents have been logged yet. The heatmap will populate as incidents occur across monitored assets."
+    },
+    "transactions": {
+      "title": "No transactions found",
+      "description": "No transactions have been recorded in the selected time range.",
+      "filteredTitle": "No transactions match your filters",
+      "filteredDescription": "Try adjusting your search or filter criteria to find what you're looking for."
+    },
+    "watchlist": {
+      "title": "Your watchlist is empty",
+      "description": "Star bridges you want to track closely. They'll show up here for quick access.",
+      "browseBridges": "Browse bridges"
+    }
   }
 }

@@ -7,6 +7,7 @@ import TransactionRow, {
 } from "./TransactionRow";
 import TransactionDetail from "./TransactionDetail";
 import { SkeletonTable } from "./Skeleton";
+import { EmptyTransactions } from "./EmptyState";
 import type { BridgeTransaction } from "../types";
 
 type TransactionHistoryProps = {
@@ -37,6 +38,13 @@ export default function TransactionHistory({
 
   const transactions = data?.transactions ?? [];
   const total = data?.total ?? 0;
+  const hasActiveFilters =
+    filters.bridge !== "" ||
+    filters.asset !== "" ||
+    filters.status !== "all" ||
+    filters.search !== "" ||
+    filters.dateFrom !== "" ||
+    filters.dateTo !== "";
 
   function handleExport() {
     const url = exportTransactionsCsv(filters);
@@ -128,18 +136,7 @@ export default function TransactionHistory({
           </table>
 
           {!isLoading && transactions.length === 0 && (
-            <div className="p-8 text-center">
-              <p className="text-stellar-text-secondary">
-                No transactions match your filters.
-              </p>
-              <button
-                type="button"
-                onClick={resetFilters}
-                className="mt-3 text-sm text-stellar-blue hover:underline"
-              >
-                Clear all filters
-              </button>
-            </div>
+            <EmptyTransactions hasFilters={hasActiveFilters} onClearFilters={resetFilters} />
           )}
         </div>
       )}
@@ -170,18 +167,7 @@ export default function TransactionHistory({
               ))}
 
           {!isLoading && transactions.length === 0 && (
-            <div className="bg-stellar-card border border-stellar-border rounded-lg p-8 text-center">
-              <p className="text-stellar-text-secondary">
-                No transactions match your filters.
-              </p>
-              <button
-                type="button"
-                onClick={resetFilters}
-                className="mt-3 text-sm text-stellar-blue hover:underline"
-              >
-                Clear all filters
-              </button>
-            </div>
+            <EmptyTransactions hasFilters={hasActiveFilters} onClearFilters={resetFilters} />
           )}
         </div>
       )}

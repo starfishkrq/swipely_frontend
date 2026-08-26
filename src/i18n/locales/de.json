@@ -13,7 +13,8 @@
     "export": "Exportieren",
     "refresh": "Aktualisieren",
     "viewMore": "Mehr anzeigen",
-    "backToTop": "Nach oben"
+    "backToTop": "Nach oben",
+    "clearFilters": "Filter zurücksetzen"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -196,5 +197,34 @@
   },
   "app": {
     "loadingPage": "Seite wird geladen..."
+  },
+  "emptyStates": {
+    "bridges": {
+      "title": "Noch keine Bridges",
+      "description": "Swipely hat noch keine Bridges erkannt. Daten werden automatisch vom Stellar-Netzwerk abgerufen — schau bald wieder vorbei.",
+      "filteredTitle": "Keine Bridges entsprechen deinen Filtern",
+      "filteredDescription": "Passe deine Suche oder Filterkriterien an, um zu finden, wonach du suchst."
+    },
+    "alerts": {
+      "title": "Keine aktiven Warnungen",
+      "description": "Alle überwachten Bridges liegen innerhalb ihrer konfigurierten Schwellenwerte. Warnungen erscheinen hier, sobald Anomalien erkannt werden.",
+      "filteredTitle": "Keine Warnungen entsprechen deinen Filtern",
+      "filteredDescription": "Passe deine Suche oder Filterkriterien an, um zu finden, wonach du suchst."
+    },
+    "incidents": {
+      "title": "Keine Vorfälle erfasst",
+      "description": "Es wurden noch keine Vorfälle erfasst. Die Heatmap füllt sich, sobald Vorfälle bei überwachten Assets auftreten."
+    },
+    "transactions": {
+      "title": "Keine Transaktionen gefunden",
+      "description": "Im ausgewählten Zeitraum wurden keine Transaktionen erfasst.",
+      "filteredTitle": "Keine Transaktionen entsprechen deinen Filtern",
+      "filteredDescription": "Passe deine Suche oder Filterkriterien an, um zu finden, wonach du suchst."
+    },
+    "watchlist": {
+      "title": "Deine Watchlist ist leer",
+      "description": "Markiere Bridges, die du genau verfolgen möchtest, mit einem Stern. Sie erscheinen hier für schnellen Zugriff.",
+      "browseBridges": "Bridges durchsuchen"
+    }
   }
 }

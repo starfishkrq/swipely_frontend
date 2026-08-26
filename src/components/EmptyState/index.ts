@@ -8,6 +8,7 @@
  *     EmptyIllustration,
  *     EmptyBridges,
  *     EmptyAlerts,
+ *     EmptyIncidents,
  *     EmptyTransactions,
  *     EmptySearch,
  *     EmptyConnection,
@@ -24,6 +25,7 @@ export * as EmptyIllustration from "./EmptyIllustration";
 export {
   EmptyBridges,
   EmptyAlerts,
+  EmptyIncidents,
   EmptyTransactions,
   EmptySearch,
   EmptyConnection,

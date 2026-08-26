@@ -13,7 +13,8 @@
     "export": "Exporter",
     "refresh": "Actualiser",
     "viewMore": "Voir plus",
-    "backToTop": "Retour en haut"
+    "backToTop": "Retour en haut",
+    "clearFilters": "Effacer les filtres"
   },
   "nav": {
     "dashboard": "Tableau de bord",
@@ -196,5 +197,34 @@
   },
   "app": {
     "loadingPage": "Chargement de la page..."
+  },
+  "emptyStates": {
+    "bridges": {
+      "title": "Aucun pont pour le moment",
+      "description": "Swipely n'a détecté aucun pont. Les données sont récupérées automatiquement depuis le réseau Stellar — revenez bientôt.",
+      "filteredTitle": "Aucun pont ne correspond à vos filtres",
+      "filteredDescription": "Essayez d'ajuster votre recherche ou vos critères de filtre pour trouver ce que vous cherchez."
+    },
+    "alerts": {
+      "title": "Aucune alerte active",
+      "description": "Tous les ponts surveillés respectent leurs seuils configurés. Les alertes apparaîtront ici lorsque des anomalies seront détectées.",
+      "filteredTitle": "Aucune alerte ne correspond à vos filtres",
+      "filteredDescription": "Essayez d'ajuster votre recherche ou vos critères de filtre pour trouver ce que vous cherchez."
+    },
+    "incidents": {
+      "title": "Aucun incident enregistré",
+      "description": "Aucun incident n'a encore été enregistré. La carte de chaleur se remplira au fur et à mesure des incidents sur les actifs surveillés."
+    },
+    "transactions": {
+      "title": "Aucune transaction trouvée",
+      "description": "Aucune transaction n'a été enregistrée pour la période sélectionnée.",
+      "filteredTitle": "Aucune transaction ne correspond à vos filtres",
+      "filteredDescription": "Essayez d'ajuster votre recherche ou vos critères de filtre pour trouver ce que vous cherchez."
+    },
+    "watchlist": {
+      "title": "Votre liste de suivi est vide",
+      "description": "Marquez d'une étoile les ponts que vous souhaitez suivre de près. Ils apparaîtront ici pour un accès rapide.",
+      "browseBridges": "Parcourir les ponts"
+    }
   }
 }

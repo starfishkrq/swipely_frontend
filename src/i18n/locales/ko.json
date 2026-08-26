@@ -13,7 +13,8 @@
     "export": "내보내기",
     "refresh": "새로고침",
     "viewMore": "더 보기",
-    "backToTop": "맨 위로"
+    "backToTop": "맨 위로",
+    "clearFilters": "필터 지우기"
   },
   "nav": {
     "dashboard": "대시보드",
@@ -196,5 +197,34 @@
   },
   "app": {
     "loadingPage": "페이지 로딩 중..."
+  },
+  "emptyStates": {
+    "bridges": {
+      "title": "아직 브릿지가 없습니다",
+      "description": "Swipely가 아직 브릿지를 감지하지 못했습니다. 데이터는 Stellar 네트워크에서 자동으로 가져옵니다. 잠시 후 다시 확인해 주세요.",
+      "filteredTitle": "필터와 일치하는 브릿지가 없습니다",
+      "filteredDescription": "검색어나 필터 조건을 조정하여 원하는 내용을 찾아보세요."
+    },
+    "alerts": {
+      "title": "활성 알림이 없습니다",
+      "description": "모니터링 중인 모든 브릿지가 설정된 임계값 범위 내에 있습니다. 이상이 감지되면 여기에 알림이 표시됩니다.",
+      "filteredTitle": "필터와 일치하는 알림이 없습니다",
+      "filteredDescription": "검색어나 필터 조건을 조정하여 원하는 내용을 찾아보세요."
+    },
+    "incidents": {
+      "title": "기록된 사건이 없습니다",
+      "description": "아직 기록된 사건이 없습니다. 모니터링 중인 자산에서 사건이 발생하면 히트맵이 채워집니다."
+    },
+    "transactions": {
+      "title": "거래 내역이 없습니다",
+      "description": "선택한 기간 동안 기록된 거래가 없습니다.",
+      "filteredTitle": "필터와 일치하는 거래가 없습니다",
+      "filteredDescription": "검색어나 필터 조건을 조정하여 원하는 내용을 찾아보세요."
+    },
+    "watchlist": {
+      "title": "관심 목록이 비어 있습니다",
+      "description": "자세히 추적하고 싶은 브릿지에 별표를 표시하세요. 빠른 접근을 위해 여기에 표시됩니다.",
+      "browseBridges": "브릿지 둘러보기"
+    }
   }
 }
