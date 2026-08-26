@@ -4,7 +4,7 @@
  * Ready-to-use compositions of EmptyState + EmptyIllustration for each
  * Swipely view. Import the variant that matches the page rather than
  * constructing props from scratch — this keeps copy and illustrations
- * consistent across the app.
+ * consistent across the app. Copy is routed through react-i18next.
  *
  * Usage:
  *   import { EmptyBridges, EmptyAlerts } from "@/components/EmptyState";
@@ -13,6 +13,7 @@
  *   if (bridges.length === 0) return <EmptyBridges onAddBridge={openModal} />;
  */
 
+import { useTranslation } from "react-i18next";
 import { EmptyState } from "./EmptyState";
 import * as EmptyIllustration from "./EmptyIllustration";
 
@@ -25,17 +26,19 @@ interface EmptyBridgesProps {
 }
 
 export function EmptyBridges({ hasFilters, onClearFilters }: EmptyBridgesProps) {
+  const { t } = useTranslation();
+
   if (hasFilters) {
     return (
       <EmptyState
         variant="page"
         illustration={<EmptyIllustration.NoResults />}
-        title="No bridges match your filters"
-        description="Try adjusting your search or filter criteria to find what you're looking for."
+        title={t("emptyStates.bridges.filteredTitle")}
+        description={t("emptyStates.bridges.filteredDescription")}
         actions={[
-          { label: "Clear filters", onClick: onClearFilters, variant: "primary" },
+          { label: t("common.clearFilters"), onClick: onClearFilters, variant: "primary" },
         ]}
-        ariaLabel="No bridges match the current filters"
+        ariaLabel={t("emptyStates.bridges.filteredTitle")}
       />
     );
   }
@@ -44,9 +47,9 @@ export function EmptyBridges({ hasFilters, onClearFilters }: EmptyBridgesProps) 
     <EmptyState
       variant="page"
       illustration={<EmptyIllustration.NoBridges />}
-      title="No bridges yet"
-      description="Swipely hasn't detected any bridges. Data is fetched from the Stellar network automatically — check back shortly."
-      ariaLabel="No bridges found"
+      title={t("emptyStates.bridges.title")}
+      description={t("emptyStates.bridges.description")}
+      ariaLabel={t("emptyStates.bridges.title")}
     />
   );
 }
@@ -54,42 +57,52 @@ export function EmptyBridges({ hasFilters, onClearFilters }: EmptyBridgesProps) 
 // ── No alerts ─────────────────────────────────────────────────────────────────
 
 interface EmptyAlertsProps {
-  /** The alerts sub-view the user is on (active, history, suppressed). */
-  view?: "active" | "history" | "suppressed";
-  onConfigureAlerts?: () => void;
+  /** Whether any filters or search are active — changes copy and actions. */
+  hasFilters?: boolean;
+  onClearFilters?: () => void;
 }
 
-export function EmptyAlerts({ view = "active", onConfigureAlerts }: EmptyAlertsProps) {
-  const copy: Record<string, { title: string; description: string }> = {
-    active: {
-      title: "No active alerts",
-      description:
-        "All monitored bridges are within their configured thresholds. Alerts will appear here when anomalies are detected.",
-    },
-    history: {
-      title: "No alert history",
-      description:
-        "No alerts have been triggered yet. Past alerts will appear here once thresholds are breached.",
-    },
-    suppressed: {
-      title: "No suppressed alerts",
-      description:
-        "You haven't suppressed any alerts. Suppressed alerts are temporarily muted and won't trigger notifications.",
-    },
-  };
+export function EmptyAlerts({ hasFilters, onClearFilters }: EmptyAlertsProps) {
+  const { t } = useTranslation();
+
+  if (hasFilters) {
+    return (
+      <EmptyState
+        variant="card"
+        illustration={<EmptyIllustration.NoResults />}
+        title={t("emptyStates.alerts.filteredTitle")}
+        description={t("emptyStates.alerts.filteredDescription")}
+        actions={[
+          { label: t("common.clearFilters"), onClick: onClearFilters, variant: "primary" },
+        ]}
+        ariaLabel={t("emptyStates.alerts.filteredTitle")}
+      />
+    );
+  }
 
   return (
     <EmptyState
       variant="card"
       illustration={<EmptyIllustration.NoAlerts />}
-      title={copy[view].title}
-      description={copy[view].description}
-      actions={
-        view === "active" && onConfigureAlerts
-          ? [{ label: "Configure alert rules", onClick: onConfigureAlerts, variant: "secondary" }]
-          : []
-      }
-      ariaLabel={copy[view].title}
+      title={t("emptyStates.alerts.title")}
+      description={t("emptyStates.alerts.description")}
+      ariaLabel={t("emptyStates.alerts.title")}
+    />
+  );
+}
+
+// ── No incidents ──────────────────────────────────────────────────────────────
+
+export function EmptyIncidents() {
+  const { t } = useTranslation();
+
+  return (
+    <EmptyState
+      variant="card"
+      illustration={<EmptyIllustration.NoAlerts />}
+      title={t("emptyStates.incidents.title")}
+      description={t("emptyStates.incidents.description")}
+      ariaLabel={t("emptyStates.incidents.title")}
     />
   );
 }
@@ -97,21 +110,36 @@ export function EmptyAlerts({ view = "active", onConfigureAlerts }: EmptyAlertsP
 // ── No transactions ───────────────────────────────────────────────────────────
 
 interface EmptyTransactionsProps {
-  bridgeName?: string;
+  /** Whether any filters are active — changes copy and actions. */
+  hasFilters?: boolean;
+  onClearFilters?: () => void;
 }
 
-export function EmptyTransactions({ bridgeName }: EmptyTransactionsProps) {
+export function EmptyTransactions({ hasFilters, onClearFilters }: EmptyTransactionsProps) {
+  const { t } = useTranslation();
+
+  if (hasFilters) {
+    return (
+      <EmptyState
+        variant="card"
+        illustration={<EmptyIllustration.NoResults />}
+        title={t("emptyStates.transactions.filteredTitle")}
+        description={t("emptyStates.transactions.filteredDescription")}
+        actions={[
+          { label: t("common.clearFilters"), onClick: onClearFilters, variant: "primary" },
+        ]}
+        ariaLabel={t("emptyStates.transactions.filteredTitle")}
+      />
+    );
+  }
+
   return (
     <EmptyState
       variant="card"
       illustration={<EmptyIllustration.NoTransactions />}
-      title="No transactions found"
-      description={
-        bridgeName
-          ? `No transactions have been recorded for ${bridgeName} in the selected time range.`
-          : "No transactions match the selected filters. Try a different time range."
-      }
-      ariaLabel="No transactions found"
+      title={t("emptyStates.transactions.title")}
+      description={t("emptyStates.transactions.description")}
+      ariaLabel={t("emptyStates.transactions.title")}
     />
   );
 }
@@ -166,18 +194,27 @@ interface EmptyWatchlistProps {
 }
 
 export function EmptyWatchlist({ onBrowseBridges }: EmptyWatchlistProps) {
+  const { t } = useTranslation();
+
   return (
     <EmptyState
       variant="card"
       illustration={<EmptyIllustration.NoWatchlist />}
-      title="Your watchlist is empty"
-      description="Star bridges you want to track closely. They'll show up here for quick access."
+      title={t("emptyStates.watchlist.title")}
+      description={t("emptyStates.watchlist.description")}
       actions={
         onBrowseBridges
-          ? [{ label: "Browse bridges", onClick: onBrowseBridges, href: "/bridges", variant: "primary" }]
+          ? [
+              {
+                label: t("emptyStates.watchlist.browseBridges"),
+                onClick: onBrowseBridges,
+                href: "/bridges",
+                variant: "primary",
+              },
+            ]
           : []
       }
-      ariaLabel="Watchlist is empty"
+      ariaLabel={t("emptyStates.watchlist.title")}
     />
   );
 }

@@ -13,7 +13,8 @@
     "export": "Exportar",
     "refresh": "Actualizar",
     "viewMore": "Ver más",
-    "backToTop": "Volver arriba"
+    "backToTop": "Volver arriba",
+    "clearFilters": "Borrar filtros"
   },
   "nav": {
     "dashboard": "Panel",
@@ -196,5 +197,34 @@
   },
   "app": {
     "loadingPage": "Cargando página..."
+  },
+  "emptyStates": {
+    "bridges": {
+      "title": "Aún no hay puentes",
+      "description": "Swipely no ha detectado ningún puente. Los datos se obtienen automáticamente de la red Stellar; vuelve a comprobarlo en breve.",
+      "filteredTitle": "Ningún puente coincide con tus filtros",
+      "filteredDescription": "Intenta ajustar tu búsqueda o los criterios de filtro para encontrar lo que buscas."
+    },
+    "alerts": {
+      "title": "No hay alertas activas",
+      "description": "Todos los puentes monitorizados están dentro de sus umbrales configurados. Las alertas aparecerán aquí cuando se detecten anomalías.",
+      "filteredTitle": "Ninguna alerta coincide con tus filtros",
+      "filteredDescription": "Intenta ajustar tu búsqueda o los criterios de filtro para encontrar lo que buscas."
+    },
+    "incidents": {
+      "title": "No se han registrado incidentes",
+      "description": "Aún no se ha registrado ningún incidente. El mapa de calor se completará a medida que ocurran incidentes en los activos monitorizados."
+    },
+    "transactions": {
+      "title": "No se encontraron transacciones",
+      "description": "No se han registrado transacciones en el rango de fechas seleccionado.",
+      "filteredTitle": "Ninguna transacción coincide con tus filtros",
+      "filteredDescription": "Intenta ajustar tu búsqueda o los criterios de filtro para encontrar lo que buscas."
+    },
+    "watchlist": {
+      "title": "Tu lista de seguimiento está vacía",
+      "description": "Marca con una estrella los puentes que quieras seguir de cerca. Aparecerán aquí para un acceso rápido.",
+      "browseBridges": "Explorar puentes"
+    }
   }
 }

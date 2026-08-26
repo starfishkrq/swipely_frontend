@@ -5,6 +5,7 @@ import {
   EmptyIllustration,
   EmptyBridges,
   EmptyAlerts,
+  EmptyIncidents,
   EmptyTransactions,
   EmptySearch,
   EmptyConnection,
@@ -129,21 +130,21 @@ export const EmptyBridgesWithFilters: Story = {
   ),
 };
 
-export const EmptyAlertsActive: Story = {
-  name: "EmptyAlerts — active",
+export const EmptyAlertsDefault: Story = {
+  name: "EmptyAlerts — no data",
+  render: () => <EmptyAlerts />,
+};
+
+export const EmptyAlertsWithFilters: Story = {
+  name: "EmptyAlerts — filters active",
   render: () => (
-    <EmptyAlerts view="active" onConfigureAlerts={action("configure-alerts")} />
+    <EmptyAlerts hasFilters onClearFilters={action("clear-filters")} />
   ),
 };
 
-export const EmptyAlertsHistory: Story = {
-  name: "EmptyAlerts — history",
-  render: () => <EmptyAlerts view="history" />,
-};
-
-export const EmptyAlertsSuppressed: Story = {
-  name: "EmptyAlerts — suppressed",
-  render: () => <EmptyAlerts view="suppressed" />,
+export const EmptyIncidentsDefault: Story = {
+  name: "EmptyIncidents",
+  render: () => <EmptyIncidents />,
 };
 
 export const EmptyTransactionsDefault: Story = {
@@ -151,9 +152,11 @@ export const EmptyTransactionsDefault: Story = {
   render: () => <EmptyTransactions />,
 };
 
-export const EmptyTransactionsBridge: Story = {
-  name: "EmptyTransactions — bridge specific",
-  render: () => <EmptyTransactions bridgeName="Circle" />,
+export const EmptyTransactionsWithFilters: Story = {
+  name: "EmptyTransactions — filters active",
+  render: () => (
+    <EmptyTransactions hasFilters onClearFilters={action("clear-filters")} />
+  ),
 };
 
 export const EmptySearchNoQuery: Story = {

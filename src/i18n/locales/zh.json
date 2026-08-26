@@ -13,7 +13,8 @@
     "export": "导出",
     "refresh": "刷新",
     "viewMore": "查看更多",
-    "backToTop": "返回顶部"
+    "backToTop": "返回顶部",
+    "clearFilters": "清除筛选"
   },
   "nav": {
     "dashboard": "仪表板",
@@ -196,5 +197,34 @@
   },
   "app": {
     "loadingPage": "正在加载页面..."
+  },
+  "emptyStates": {
+    "bridges": {
+      "title": "暂无跨链桥",
+      "description": "Swipely 尚未检测到任何跨链桥。数据会自动从 Stellar 网络获取，请稍后再来查看。",
+      "filteredTitle": "没有符合筛选条件的跨链桥",
+      "filteredDescription": "请尝试调整搜索或筛选条件以找到您需要的内容。"
+    },
+    "alerts": {
+      "title": "暂无活跃告警",
+      "description": "所有受监控的跨链桥均在配置的阈值范围内。检测到异常时，告警将显示在此处。",
+      "filteredTitle": "没有符合筛选条件的告警",
+      "filteredDescription": "请尝试调整搜索或筛选条件以找到您需要的内容。"
+    },
+    "incidents": {
+      "title": "暂无已记录的事件",
+      "description": "尚未记录任何事件。随着受监控资产发生事件，热力图将逐步填充。"
+    },
+    "transactions": {
+      "title": "未找到交易记录",
+      "description": "所选时间范围内没有记录任何交易。",
+      "filteredTitle": "没有符合筛选条件的交易",
+      "filteredDescription": "请尝试调整搜索或筛选条件以找到您需要的内容。"
+    },
+    "watchlist": {
+      "title": "您的关注列表为空",
+      "description": "为想要密切关注的跨链桥加星标，它们会显示在此处以便快速访问。",
+      "browseBridges": "浏览跨链桥"
+    }
   }
 }

@@ -1,6 +1,7 @@
 // src/components/IncidentHeatmap.tsx
 import React, { useMemo } from "react";
 import { useIncidentFeed, type IncidentSeverity, type BridgeIncident } from "../hooks/useIncidentFeed";
+import { EmptyIncidents } from "./EmptyState";
 
 // Helper to bucket incidents by date (YYYY-MM-DD) and asset code
 function bucketIncidents(incidents: BridgeIncident[]) {
@@ -52,8 +53,21 @@ export default function IncidentHeatmap() {
           Failed to load incidents.
         </div>
       )}
-      {isLoading && <p className="text-stellar-text-secondary">Loading…</p>}
-      {!isLoading && !error && (
+      {isLoading && (
+        <div
+          className="grid gap-1"
+          style={{ gridTemplateColumns: "repeat(6, minmax(30px, 1fr))" }}
+          role="status"
+          aria-busy="true"
+          aria-label="Loading incident heatmap"
+        >
+          {Array.from({ length: 5 * 6 }).map((_, i) => (
+            <div key={i} className="skeleton w-6 h-6 rounded" />
+          ))}
+        </div>
+      )}
+      {!isLoading && !error && dates.length === 0 && <EmptyIncidents />}
+      {!isLoading && !error && dates.length > 0 && (
         <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${assetsSet.length + 1}, minmax(30px, 1fr))` }}>
           {/* Header row */}
           <div></div>

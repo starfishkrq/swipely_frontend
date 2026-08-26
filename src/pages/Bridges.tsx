@@ -11,6 +11,7 @@ import FavoriteTagChip from "../components/favorites/FavoriteTagChip";
 import RefreshControls from "../components/RefreshControls";
 import PullToRefresh from "../components/PullToRefresh";
 import { SkeletonCard, ErrorBoundary } from "../components/Skeleton";
+import { EmptyBridges } from "../components/EmptyState";
 import {
   applyBridgeFilterSort,
   useBridgeFilterSortStore,
@@ -29,6 +30,7 @@ export default function Bridges() {
 
   const statusFilter = useBridgeFilterSortStore((s) => s.statusFilter);
   const sortBy = useBridgeFilterSortStore((s) => s.sortBy);
+  const setStatusFilter = useBridgeFilterSortStore((s) => s.setStatusFilter);
 
   const refreshControls = useRefreshControls({
     viewId: "bridges",
@@ -164,18 +166,16 @@ export default function Bridges() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-lg border border-stellar-border bg-stellar-card p-8 text-center">
-                <p className="text-stellar-text-secondary">
-                  No bridges match your favorites filter. Clear the filter or star bridges from each card.
-                </p>
-              </div>
+              <EmptyBridges
+                hasFilters
+                onClearFilters={() => {
+                  setFavoritesFilterMode("all");
+                  setStatusFilter("all");
+                }}
+              />
             )
           ) : (
-            <div className="bg-stellar-card border border-stellar-border rounded-lg p-8 text-center">
-              <p className="text-stellar-text-secondary">
-                No bridge data available. Bridge monitoring will populate this page once configured and running.
-              </p>
-            </div>
+            <EmptyBridges />
           )}
         </Suspense>
       </ErrorBoundary>

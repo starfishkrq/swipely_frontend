@@ -6,6 +6,8 @@ import { AssetWatchlistButton } from "../components/AssetWatchlistButton";
 import { getAssetPrice, getAssetHealth } from "../services/api";
 import type { HealthScore } from "../types";
 import { Link } from "react-router-dom";
+import { EmptyWatchlist } from "../components/EmptyState";
+import { SkeletonText } from "../components/Skeleton";
 
 interface AssetDetails {
   price: {
@@ -93,18 +95,7 @@ export default function WatchlistPage() {
           </div>
 
           {activeWatchlist.assets.length === 0 ? (
-            <div className="p-12 text-center text-gray-400">
-              <div className="inline-block p-4 rounded-full bg-stellar-dark mb-4">
-                <svg className="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-                </svg>
-              </div>
-              <p className="text-lg mb-2">No assets in this watchlist yet.</p>
-              <p className="text-sm">Browse the dashboard and click the star icon to add assets here.</p>
-              <Link to="/dashboard" className="mt-4 inline-block text-stellar-blue hover:text-blue-300">
-                Go to Dashboard &rarr;
-              </Link>
-            </div>
+            <EmptyWatchlist onBrowseBridges={() => {}} />
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -139,18 +130,26 @@ export default function WatchlistPage() {
                           </Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <span className="text-stellar-text-primary font-mono">
-                            {isLoading ? "..." : data?.price?.vwap ? `$${data.price.vwap.toFixed(4)}` : "—"}
-                          </span>
+                          {isLoading ? (
+                            <SkeletonText variant="small" width={64} className="ml-auto" />
+                          ) : (
+                            <span className="text-stellar-text-primary font-mono">
+                              {data?.price?.vwap ? `$${data.price.vwap.toFixed(4)}` : "—"}
+                            </span>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-                            typeof healthScore === "number" && healthScore >= 80 ? "bg-green-400/10 text-green-400 border-green-400/20" :
-                            typeof healthScore === "number" && healthScore >= 50 ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/20" :
-                            "bg-red-400/10 text-red-400 border-red-400/20"
-                          }`}>
-                            {isLoading ? "..." : healthScore ?? "—"}
-                          </span>
+                          {isLoading ? (
+                            <SkeletonText variant="small" width={40} className="ml-auto" />
+                          ) : (
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                              typeof healthScore === "number" && healthScore >= 80 ? "bg-green-400/10 text-green-400 border-green-400/20" :
+                              typeof healthScore === "number" && healthScore >= 50 ? "bg-yellow-400/10 text-yellow-400 border-yellow-400/20" :
+                              "bg-red-400/10 text-red-400 border-red-400/20"
+                            }`}>
+                              {healthScore ?? "—"}
+                            </span>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
                           <AssetWatchlistButton symbol={symbol} size="lg" className="p-2" />
