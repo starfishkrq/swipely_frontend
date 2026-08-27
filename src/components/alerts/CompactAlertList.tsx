@@ -86,11 +86,16 @@ function SortHeader({
   onSort: (f: SortField) => void;
 }) {
   const active = current === field;
+  const sortDescription = active
+    ? dir === "asc"
+      ? ", sorted ascending"
+      : ", sorted descending"
+    : "";
   return (
     <button
       type="button"
       onClick={() => onSort(field)}
-      aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
+      aria-label={`Sort by ${label}${sortDescription}`}
       className={`inline-flex items-center gap-1 whitespace-nowrap text-xs font-semibold uppercase tracking-wider transition-colors ${
         active
           ? "text-stellar-blue"
@@ -100,16 +105,16 @@ function SortHeader({
       {label}
       {active ? (
         dir === "asc" ? (
-          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M6 9.5V2.5M3 5.5L6 2.5 9 5.5" />
           </svg>
         ) : (
-          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M6 2.5V9.5M3 6.5L6 9.5 9 6.5" />
           </svg>
         )
       ) : (
-        <svg className="w-3 h-3 opacity-30" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+        <svg className="w-3 h-3 opacity-30" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M3 4.5L6 1.5 9 4.5M3 7.5L6 10.5 9 7.5" />
         </svg>
       )}
@@ -158,7 +163,7 @@ function AlertRow({
       aria-selected={selected}
     >
       {/* Checkbox */}
-      <div className="w-5 flex-shrink-0">
+      <div role="gridcell" className="w-5 flex-shrink-0">
         <input
           type="checkbox"
           checked={selected}
@@ -170,12 +175,12 @@ function AlertRow({
       </div>
 
       {/* Severity icon */}
-      <div className="w-4 flex-shrink-0 flex items-center justify-center">
+      <div role="gridcell" className="w-4 flex-shrink-0 flex items-center justify-center">
         <SeverityIcon severity={incident.severity} />
       </div>
 
       {/* Title + mobile meta */}
-      <div className="flex-1 min-w-0">
+      <div role="gridcell" className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 min-w-0">
           {isUnread && (
             <span
@@ -210,7 +215,7 @@ function AlertRow({
       </div>
 
       {/* Bridge — desktop only */}
-      <div className="hidden sm:block w-28 flex-shrink-0 min-w-0">
+      <div role="gridcell" className="hidden sm:block w-28 flex-shrink-0 min-w-0">
         <span className="text-xs text-stellar-text-muted truncate block">
           {incident.bridgeId}
           {incident.assetCode && (
@@ -220,7 +225,7 @@ function AlertRow({
       </div>
 
       {/* Severity badge — desktop only */}
-      <div className="hidden sm:block w-[5.5rem] flex-shrink-0">
+      <div role="gridcell" className="hidden sm:block w-[5.5rem] flex-shrink-0">
         <span
           className={`text-xs font-semibold uppercase px-1.5 py-0.5 rounded ${
             SEVERITY_BADGE[incident.severity]
@@ -231,14 +236,14 @@ function AlertRow({
       </div>
 
       {/* Status — desktop only */}
-      <div className="hidden sm:block w-20 flex-shrink-0">
+      <div role="gridcell" className="hidden sm:block w-20 flex-shrink-0">
         <span className={`text-xs font-medium capitalize ${STATUS_STYLE[incident.status]}`}>
           {incident.status}
         </span>
       </div>
 
       {/* Time — always */}
-      <div className="flex-shrink-0 w-16 text-right">
+      <div role="gridcell" className="flex-shrink-0 w-16 text-right">
         <span className="text-xs text-stellar-text-muted whitespace-nowrap">
           {relativeTime(incident.occurredAt)}
         </span>
@@ -512,7 +517,7 @@ export default function CompactAlertList({
 
       {/* List */}
       <div
-        role="table"
+        role="grid"
         aria-label="Alert rows"
         className="rounded-lg border border-stellar-border overflow-hidden"
       >
@@ -526,7 +531,7 @@ export default function CompactAlertList({
             role="row"
             className="hidden sm:flex items-center gap-2 px-3 py-2"
           >
-            <div className="w-5 flex-shrink-0">
+            <div role="columnheader" aria-label="Select" className="w-5 flex-shrink-0">
               <input
                 ref={selectAllRef}
                 type="checkbox"
@@ -536,22 +541,38 @@ export default function CompactAlertList({
                 aria-label="Select all alerts"
               />
             </div>
-            <div className="w-4 flex-shrink-0" aria-hidden="true" />
-            <div className="flex-1 min-w-0">
+            <div role="columnheader" aria-label="Severity indicator" className="w-4 flex-shrink-0" aria-hidden="true" />
+            <div
+              role="columnheader"
+              aria-sort={sortField === "title" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+              className="flex-1 min-w-0"
+            >
               <SortHeader label="Title" field="title" {...sortProps} />
             </div>
-            <div className="w-28 flex-shrink-0">
+            <div role="columnheader" className="w-28 flex-shrink-0">
               <span className="text-xs font-semibold uppercase tracking-wider text-stellar-text-muted">
                 Bridge
               </span>
             </div>
-            <div className="w-[5.5rem] flex-shrink-0">
+            <div
+              role="columnheader"
+              aria-sort={sortField === "severity" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+              className="w-[5.5rem] flex-shrink-0"
+            >
               <SortHeader label="Severity" field="severity" {...sortProps} />
             </div>
-            <div className="w-20 flex-shrink-0">
+            <div
+              role="columnheader"
+              aria-sort={sortField === "status" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+              className="w-20 flex-shrink-0"
+            >
               <SortHeader label="Status" field="status" {...sortProps} />
             </div>
-            <div className="w-16 flex-shrink-0 text-right">
+            <div
+              role="columnheader"
+              aria-sort={sortField === "time" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+              className="w-16 flex-shrink-0 text-right"
+            >
               <SortHeader label="Time" field="time" {...sortProps} />
             </div>
           </div>
@@ -561,7 +582,7 @@ export default function CompactAlertList({
             role="row"
             className="sm:hidden flex items-center gap-3 px-3 py-2"
           >
-            <div className="w-5 flex-shrink-0">
+            <div role="columnheader" aria-label="Select" className="w-5 flex-shrink-0">
               <input
                 type="checkbox"
                 checked={allSelected}
@@ -570,13 +591,35 @@ export default function CompactAlertList({
                 aria-label="Select all alerts"
               />
             </div>
-            <span className="text-xs text-stellar-text-muted uppercase tracking-wide">
-              Sort:
-            </span>
-            <SortHeader label="Sev." field="severity" {...sortProps} />
-            <SortHeader label="Time" field="time" {...sortProps} />
-            <SortHeader label="Status" field="status" {...sortProps} />
-            <SortHeader label="Title" field="title" {...sortProps} />
+            <div role="columnheader" className="contents">
+              <span className="text-xs text-stellar-text-muted uppercase tracking-wide">
+                Sort:
+              </span>
+            </div>
+            <div
+              role="columnheader"
+              aria-sort={sortField === "severity" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+            >
+              <SortHeader label="Sev." field="severity" {...sortProps} />
+            </div>
+            <div
+              role="columnheader"
+              aria-sort={sortField === "time" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+            >
+              <SortHeader label="Time" field="time" {...sortProps} />
+            </div>
+            <div
+              role="columnheader"
+              aria-sort={sortField === "status" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+            >
+              <SortHeader label="Status" field="status" {...sortProps} />
+            </div>
+            <div
+              role="columnheader"
+              aria-sort={sortField === "title" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+            >
+              <SortHeader label="Title" field="title" {...sortProps} />
+            </div>
           </div>
         </div>
 
@@ -586,15 +629,16 @@ export default function CompactAlertList({
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
+                role="row"
                 className="flex items-center gap-2 px-3 py-2 animate-pulse"
               >
-                <div className="w-5 h-4 bg-stellar-border/50 rounded flex-shrink-0" />
-                <div className="w-4 h-4 bg-stellar-border/50 rounded-full flex-shrink-0" />
-                <div className="flex-1 h-3 bg-stellar-border/50 rounded" />
-                <div className="hidden sm:block w-28 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
-                <div className="hidden sm:block w-16 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
-                <div className="hidden sm:block w-16 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
-                <div className="w-12 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
+                <div role="gridcell" className="w-5 h-4 bg-stellar-border/50 rounded flex-shrink-0" />
+                <div role="gridcell" className="w-4 h-4 bg-stellar-border/50 rounded-full flex-shrink-0" />
+                <div role="gridcell" className="flex-1 h-3 bg-stellar-border/50 rounded" />
+                <div role="gridcell" className="hidden sm:block w-28 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
+                <div role="gridcell" className="hidden sm:block w-16 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
+                <div role="gridcell" className="hidden sm:block w-16 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
+                <div role="gridcell" className="w-12 h-3 bg-stellar-border/50 rounded flex-shrink-0" />
               </div>
             ))}
           </div>
