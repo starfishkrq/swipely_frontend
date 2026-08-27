@@ -35,3 +35,45 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  e2e:
+    name: Playwright e2e tests
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build app
+        run: npm run build
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload Playwright traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 14
