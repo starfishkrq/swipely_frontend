@@ -80,7 +80,7 @@ export default function BridgeStatusCard({
       <div
         className={`mb-4 flex items-center justify-between gap-2 ${topRight ? "pr-14" : ""}`}
       >
-        <h3 className="text-lg font-semibold text-stellar-text-primary truncate">{name}</h3>
+        <p className="text-lg font-semibold text-stellar-text-primary truncate">{name}</p>
         <AssetStatusBadge status={bridgeStatusToAssetStatus(status)} size="sm" />
       </div>
 
