@@ -125,14 +125,24 @@ test.describe("core navigation journeys", () => {
     await stubApis(page);
     await page.goto("/");
 
-    // Click the primary CTA in the hero.
-    await page.getByRole("link", { name: "Open Dashboard" }).first().click();
+    // Wait for the landing page hero heading to confirm the page is fully rendered
+    // before clicking — avoids race where click fires before React hydrates.
+    await expect(
+      page.getByRole("heading", { name: /bridge and asset/i }),
+    ).toBeVisible();
 
-    // Should land on /dashboard with the Dashboard heading.
-    await expect(page).toHaveURL(/\/dashboard/);
+    // Click and wait for the URL to change in the same Promise.all so neither
+    // call races the other.
+    await Promise.all([
+      page.waitForURL(/\/dashboard/, { timeout: 30_000 }),
+      page.getByRole("link", { name: "Open Dashboard" }).first().click(),
+    ]);
+
+    // Dashboard is lazy-loaded behind React Suspense. Give it enough time for
+    // the JS chunk to arrive and the component tree to render.
     await expect(
       page.getByRole("heading", { name: "Dashboard", level: 1 }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
   });
 
   test("Dashboard page renders without application errors", async ({ page }) => {
